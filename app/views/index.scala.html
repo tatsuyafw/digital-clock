@@ -1,3 +1,9 @@
 @(message: String)
 
+@import com.feth.play.module.pa.views.html._
+
 <h1>@message</h1>
+
+@forProviders() { p =>
+    <a href="@p.getUrl()">@p.getKey()</a>
+}
