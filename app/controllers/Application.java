@@ -21,7 +21,6 @@ public class Application extends Controller {
 
   public static Result oAuth(final String provider) {
     Http.Request req = play.mvc.Http.Context.current().request();
-    System.out.println(req.queryString());
 
     if (req.queryString().containsKey("denied")) {
       return oAuthDenied(provider);
