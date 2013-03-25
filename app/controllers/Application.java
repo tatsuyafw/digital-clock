@@ -18,6 +18,18 @@ public class Application extends Controller {
     String dateStr = new DateTime().toString();
     return ok(index.render(msg, dateStr));
   }
+
+  public static Result oAuth(final String provider) {
+    Http.Request req = play.mvc.Http.Context.current().request();
+    System.out.println(req.queryString());
+
+    if (req.queryString().containsKey("denied")) {
+      return oAuthDenied(provider);
+    }
+
+    return com.feth.play.module.pa.controllers.Authenticate.authenticate(provider);
+  }
+
   public static Result oAuthDenied(final String providerKey) {
     com.feth.play.module.pa.controllers.Authenticate.noCache(response());
     flash(FLASH_ERROR_KEY,
