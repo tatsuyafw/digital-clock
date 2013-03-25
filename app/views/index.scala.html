@@ -1,8 +1,14 @@
-@(message: String)
+@(message: String, date: String)
 
 @import com.feth.play.module.pa.views.html._
 
 <h1>@message</h1>
+
+<h2>@date</h2>
+
+@helper.form(action = routes.Application.index()) {
+  <input type="submit" value="update"/>
+}
 
 @forProviders() { p =>
     <a href="@p.getUrl()">@p.getKey()</a>

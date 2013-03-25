@@ -1,5 +1,7 @@
 package controllers;
 
+import org.joda.time.DateTime;
+
 import play.*;
 import play.mvc.*;
 
@@ -12,7 +14,9 @@ public class Application extends Controller {
   public static final String FLASH_ERROR_KEY = "error";
 
   public static Result index() {
-    return ok(index.render("Hello, nicocale"));
+    String msg     = "Hello, nicocale";
+    String dateStr = new DateTime().toString();
+    return ok(index.render(msg, dateStr));
   }
   public static Result oAuthDenied(final String providerKey) {
     com.feth.play.module.pa.controllers.Authenticate.noCache(response());
