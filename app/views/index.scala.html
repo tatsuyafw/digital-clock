@@ -9,10 +9,10 @@
 <h2>@date</h2>
 
 @helper.form(action = routes.Application.index()) {
-  <input type="submit" value="update"/>
+  <button type="submit" class="btn btn-primary">Update</button>
 }
 
 @forProviders() { p =>
-    <a href="@p.getUrl()">@p.getKey()</a>
+<p>Sign up with Twitter: <a href="@p.getUrl()">@p.getKey()</a></p>
 }
 }
