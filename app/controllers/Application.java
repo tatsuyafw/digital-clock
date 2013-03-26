@@ -19,6 +19,10 @@ public class Application extends Controller {
     return ok(index.render(msg, dateStr));
   }
 
+  public static Result login() {
+    return ok("login page");
+  }
+
   public static Result oAuth(final String provider) {
     Http.Request req = play.mvc.Http.Context.current().request();
 
