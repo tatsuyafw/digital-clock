@@ -20,7 +20,8 @@ public class Application extends Controller {
   }
 
   public static Result login() {
-    return ok("login page");
+    String msg = "login in Nicocale with Twitter";
+    return ok(login.render(msg));
   }
 
   public static Result oAuth(final String provider) {
