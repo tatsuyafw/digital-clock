@@ -15,10 +15,13 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
-          <a href="@routes.Application.index()" class="brand">Nicocale</a>
-          <ul class="nav">
-            <li><a href="@routes.Application.login()">Login</a></li>
-          </ul>
+          <a ref="#" class="brand">Nicocale</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="@("active".when(nav == "index"))"><a href="@routes.Application.index()">Home</a></li>
+              <li class="@("active".when(nav == "login"))"><a href="@routes.Application.login()">Login</a></li>
+            </ul>
+          </div><!-- .nav-collapse -->
         </div>
       </div>
     </div>

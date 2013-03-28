@@ -38,7 +38,7 @@ public class Application extends Controller {
   }
 
   public static Result login() {
-    String msg = "login in Nicocale with Twitter";
+    String msg = "Login";
     return ok(login.render(msg));
   }
 
