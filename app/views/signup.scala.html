@@ -28,10 +28,6 @@
                 '_label -> Messages("playauthenticate.signup.name")
              )
              
-             @_emailPartial(signupForm)
-             
-             @_passwordPartial(signupForm)
-
             <input type="submit" value="@Messages("playauthenticate.signup.now")" class="btn btn-primary">
     	}
     </div>
@@ -39,7 +35,6 @@
     <div class="span3">
         @Messages("playauthenticate.signup.oauth")
         @* Display list of available providers *@
-        @_providerPartial(skipCurrent=false)
     </div>
 
   </div>
