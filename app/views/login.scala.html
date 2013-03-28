@@ -1,0 +1,12 @@
+@(message: String)
+
+@import com.feth.play.module.pa.views.html._
+@import helper.twitterBootstrap._
+
+@main("Nicocale", "login") {
+  <h1>@message</h1>
+
+  @forProviders() { p =>
+    <p>Login with Twitter: <a href="@p.getUrl()">@_providerIcon("twitter")</a></p>
+  }
+}
