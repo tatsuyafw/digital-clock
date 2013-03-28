@@ -1,8 +1,6 @@
 package controllers;
 
 import org.joda.time.DateTime;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import models.User;
 import play.*;
@@ -39,12 +37,6 @@ public class Application extends Controller {
     return localUser;
   }
 
-  @Restrict(@Group(Application.USER_ROLE))
-  public static Result profile() {
-    final User localUser = getLocalUser(session());
-    return ok(profile.render(localUser));
-  }
-
   public static Result login() {
     String msg = "login in Nicocale with Twitter";
     return ok(login.render(msg));
@@ -56,9 +48,6 @@ public class Application extends Controller {
     if (req.queryString().containsKey("denied")) {
       return oAuthDenied(provider);
     }
-
-    System.out.println(provider);
-    System.out.println("hogehoge");
 
     return com.feth.play.module.pa.controllers.Authenticate.authenticate(provider);
   }
@@ -87,9 +76,5 @@ public class Application extends Controller {
       // signup
       return UsernamePasswordAuthProvider.handleSignup(ctx());
     }
-  }
-
-  public static String formatTimestamp(final long t) {
-    return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(t));
   }
 }

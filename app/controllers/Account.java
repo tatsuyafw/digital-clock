@@ -17,7 +17,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthUser;
-import views.html.account.*;
 
 import static play.data.Form.form;
 
@@ -75,10 +74,4 @@ public class Account extends Controller {
 
   private static final Form<Accept> ACCEPT_FORM = form(Accept.class);
   private static final Form<Account.PasswordChange> PASSWORD_CHANGE_FORM = form(Account.PasswordChange.class);
-
-  @SubjectPresent
-    public static Result link() {
-    com.feth.play.module.pa.controllers.Authenticate.noCache(response());
-    return ok(link.render());
-  }
 }
