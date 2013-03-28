@@ -1,6 +1,7 @@
 package controllers;
 
 import org.joda.time.DateTime;
+import java.util.Map;
 
 import models.User;
 import play.*;
@@ -24,11 +25,18 @@ public class Application extends Controller {
   public static final String FLASH_MESSAGE_KEY = "message";
   public static final String FLASH_ERROR_KEY = "error";
   public static final String USER_ROLE = "user";
-  
+
   public static Result index() {
+    Http.Request req = play.mvc.Http.Context.current().request();
+    Map queryParameters = req.queryString();
+    String sizeStr = "" + queryParameters.size();
+    System.out.println(sizeStr);
     String msg     = "Hello, nicocale";
     String dateStr = new DateTime().toString();
     return ok(index.render(msg, dateStr));
+    //String sizeStr = "" + queryParameters.size();
+    //return ok(String.format("Here's my server-side data using $.get(), and you sent me [%s]", sizeStr)) ;
+    // return ok(String.format("Here's my server-side data using $.get(), and you sent me [%s]", queryParameters.get("foo")[0]));
   }
 
   public static User getLocalUser(final Session session) {
