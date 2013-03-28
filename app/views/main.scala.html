@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, nav: String = "")(content: Html)
 
 <!DOCTYPE html>
 
@@ -6,7 +6,6 @@
   <head>
     <title>@title</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/todc-bootstrap.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
@@ -15,9 +14,13 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
-          <a href="@routes.Application.index()" class="brand">
-            Nicocale
-          </a>
+          <a href="@routes.Application.index()" class="brand">Nicocale</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="@("active".when(nav == "index"))"><a href="@routes.Application.index()">Home</a></li>
+              <li class="@("active".when(nav == "login"))"><a href="@routes.Application.login()">Login</a></li>
+            </ul>
+          </div><!-- .nav-collapse -->
         </div>
       </div>
     </div>
