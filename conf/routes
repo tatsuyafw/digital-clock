@@ -5,10 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-
 # play-authenticate
-GET     /profile                    controllers.Application.profile
-
 GET     /login                      controllers.Application.login()
 
 GET     /logout                     com.feth.play.module.pa.controllers.Authenticate.logout
@@ -25,11 +22,6 @@ GET     /accounts/exists            controllers.Signup.exists
 
 GET     /accounts/password/reset/:token     controllers.Signup.resetPassword(token: String)
 POST    /accounts/password/reset            controllers.Signup.doResetPassword
-
-GET    /accounts/password/change    controllers.Account.changePassword
-POST   /accounts/password/change    controllers.Account.doChangePassword
-
-GET     /accounts/verify            controllers.Account.verifyEmail
 
 GET     /accounts/link              controllers.Account.askLink
 POST    /accounts/link              controllers.Account.doLink
