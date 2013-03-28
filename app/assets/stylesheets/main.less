@@ -1,3 +1,8 @@
+// main.less
+
+@background-image-top:    #6A8CC7;
+@background-image-bottom: #3261AB;
+
 #body {
   margin-top: 60px;
 }
@@ -7,8 +12,12 @@
 }
 
 .navbar-inverse .navbar-inner {
-  background-image: linear-gradient(to bottom, #6A8CC7, #3261AB);
-  border-color: #3261AB;
+  background-image: -moz-linear-gradient(top, @background-image-top, @background-image-bottom);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@background-image-top), to(@background-image-bottom));
+  background-image: -webkit-linear-gradient(top, @background-image-top, @background-image-bottom);
+  background-image: -o-linear-gradient(top, @background-image-top, @background-image-bottom);
+  background-image: linear-gradient(to bottom, @background-image-top, @background-image-bottom);
+  border-color: @background-image-bottom;
 }
 
 .navbar .nav > li > a {
@@ -16,7 +25,7 @@
 }
 
 .navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover, .navbar-inverse .nav .active > a:focus {
-    background-color: #3261AB;
+    background-color: @background-image-bottom;
     color: #FFFFFF;
 }
 
