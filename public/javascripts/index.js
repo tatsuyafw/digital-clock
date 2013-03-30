@@ -1,7 +1,7 @@
 // index.js
 
 $(function() {
-    $('#dateTimeUpdate').click(function() {
+    function getTime() {
         $.ajax({
             url: '/time',
             dataType: 'json',
@@ -12,5 +12,11 @@ $(function() {
                 console.log("error");
             }
         });
+    }
+    $('#dateTimeUpdate').click(function() {
+        getTime();
     });
+    setInterval(function() {
+        getTime();
+    }, 1000);
 });
