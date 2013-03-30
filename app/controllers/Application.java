@@ -1,6 +1,7 @@
 package controllers;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import java.util.Map;
 
 import models.User;
@@ -27,16 +28,15 @@ public class Application extends Controller {
   public static final String USER_ROLE = "user";
 
   public static Result index() {
-    Http.Request req = play.mvc.Http.Context.current().request();
-    Map queryParameters = req.queryString();
-    String sizeStr = "" + queryParameters.size();
-    System.out.println(sizeStr);
-    String msg     = "Hello, nicocale";
-    String dateStr = new DateTime().toString();
-    return ok(index.render(msg, dateStr));
-    //String sizeStr = "" + queryParameters.size();
-    //return ok(String.format("Here's my server-side data using $.get(), and you sent me [%s]", sizeStr)) ;
-    // return ok(String.format("Here's my server-side data using $.get(), and you sent me [%s]", queryParameters.get("foo")[0]));
+    // Http.Request req = play.mvc.Http.Context.current().request();
+    // Map<String, String[]> headers         = req.headers();
+    // for (Map.Entry <String, String[]> e : headers.entrySet()) {
+    //   System.out.println(e.getKey() + ": " + e.getValue());
+    // }
+    String msg  = "Hello, nicocale";
+    DateTime dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
+    String currentDateTime = dt.toString();
+    return ok(index.render(msg, currentDateTime));
   }
 
   public static User getLocalUser(final Session session) {
@@ -85,4 +85,5 @@ public class Application extends Controller {
       return UsernamePasswordAuthProvider.handleSignup(ctx());
     }
   }
+
 }
