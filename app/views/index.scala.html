@@ -7,13 +7,7 @@
 @main("Nicocale", "index") {
 <h1>@message</h1>
 
-<h2 id="currentDateTime">@currentDateTime</h2>
-<button id="currentDateTimeUpdate" class="btn btn-primary">Update</button>
-<script type="text/javascript">
-  $(function() {
-      $('#currentDateTimeUpdate').click(function() {
-        $('#currentDateTime').load('/ #currentDateTime');
-      });
-  });
-</script>
+<h2 id="dateTime">@currentDateTime</h2>
+<button id="dateTimeUpdate" class="btn btn-primary">Update</button>
+<script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
 }

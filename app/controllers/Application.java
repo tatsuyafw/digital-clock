@@ -7,6 +7,7 @@ import java.util.Map;
 import models.User;
 import play.*;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.Session;
 import providers.MyUsernamePasswordAuthProvider;
@@ -21,11 +22,21 @@ import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
 
+import org.codehaus.jackson.node.ObjectNode;
+
 public class Application extends Controller {
 
   public static final String FLASH_MESSAGE_KEY = "message";
   public static final String FLASH_ERROR_KEY = "error";
   public static final String USER_ROLE = "user";
+
+  public static Result time() {
+    DateTime dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
+    String dateTimeStr = dt.toString();
+    ObjectNode json = Json.newObject();
+    json.put("dateTime", dateTimeStr);
+    return ok(json);
+  }
 
   public static Result index() {
     // Http.Request req = play.mvc.Http.Context.current().request();
@@ -35,8 +46,8 @@ public class Application extends Controller {
     // }
     String msg  = "Hello, nicocale";
     DateTime dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
-    String currentDateTime = dt.toString();
-    return ok(index.render(msg, currentDateTime));
+    String dateTimeStr = dt.toString();
+    return ok(index.render(msg, dateTimeStr));
   }
 
   public static User getLocalUser(final Session session) {

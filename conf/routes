@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /time                       controllers.Application.time()
+
 # play-authenticate
 GET     /login                      controllers.Application.login()
 
