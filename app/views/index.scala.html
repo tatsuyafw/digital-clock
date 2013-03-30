@@ -1,13 +1,7 @@
-@(message: String, currentDateTime: String)
+@(message: String, dateTime: String)
 
-@import com.feth.play.module.pa.views.html._
 @import helper.twitterBootstrap._
-
 
 @main("Nicocale", "index") {
 <h1>@message</h1>
-
-<h2 id="dateTime">@currentDateTime</h2>
-<button id="dateTimeUpdate" class="btn btn-primary">Update</button>
-<script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
 }

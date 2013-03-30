@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-
+GET     /clock                      controllers.Application.clock()
 GET     /time                       controllers.Application.time()
 
 # play-authenticate

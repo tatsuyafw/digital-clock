@@ -1,0 +1,24 @@
+@(dateTime: String)
+
+@import helper.twitterBootstrap._
+@main("Nicocale", "clock") {
+<div class="row">
+  <div class="">
+    <h1 id="dateTime">@dateTime</h1>
+  </div>
+</div>
+<div class="row">
+  <form class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="timezone">TimeZone</label>
+      <div class="controls">
+        <select id="timezone"class="span2">
+          <option>UTC</option>
+          <option selected>Asia/Tokyo</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="@routes.Assets.at("javascripts/clock.js")" type="text/javascript"></script>
+}

@@ -1,7 +1,9 @@
 package controllers;
 
+import org.codehaus.jackson.node.ObjectNode;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import java.util.Map;
 
 import models.User;
@@ -13,7 +15,6 @@ import play.mvc.Http.Session;
 import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthProvider.MyLogin;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
-
 import views.html.*;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
@@ -22,8 +23,6 @@ import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
 
-import org.codehaus.jackson.node.ObjectNode;
-
 public class Application extends Controller {
 
   public static final String FLASH_MESSAGE_KEY = "message";
@@ -31,34 +30,35 @@ public class Application extends Controller {
   public static final String USER_ROLE = "user";
 
   public static Result time() {
-    DateTime dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
-    String dateTimeStr = dt.toString();
+    Http.Request req = play.mvc.Http.Context.current().request();
+    
+    Map<String, String[]> queries  = req.queryString();
+    String timezone = getTimeZone(queries);
+    
     ObjectNode json = Json.newObject();
-    json.put("dateTime", dateTimeStr);
+    json.put("dateTime", dateTimeStr(timezone));
     return ok(json);
   }
 
   public static Result index() {
-    // Http.Request req = play.mvc.Http.Context.current().request();
-    // Map<String, String[]> headers         = req.headers();
-    // for (Map.Entry <String, String[]> e : headers.entrySet()) {
-    //   System.out.println(e.getKey() + ": " + e.getValue());
-    // }
+
     String msg  = "Hello, nicocale";
-    DateTime dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
-    String dateTimeStr = dt.toString();
-    return ok(index.render(msg, dateTimeStr));
+    return ok(index.render(msg, dateTimeStr()));
   }
 
-  public static User getLocalUser(final Session session) {
-    final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
-    final User localUser = User.findByAuthUserIdentity(currentAuthUser);
-    return localUser;
+  public static Result clock() {
+    return ok(clock.render(dateTimeStr()));
   }
 
   public static Result login() {
     String msg = "Login";
     return ok(login.render(msg));
+  }
+
+    public static User getLocalUser(final Session session) {
+    final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
+    final User localUser = User.findByAuthUserIdentity(currentAuthUser);
+    return localUser;
   }
 
   public static Result oAuth(final String provider) {
@@ -97,4 +97,25 @@ public class Application extends Controller {
     }
   }
 
+  private static String dateTimeStr(String timezone) {
+    DateTime dt = null;
+    if (timezone == null) {
+      dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
+    } else {
+      dt = new DateTime(DateTimeZone.forID(timezone));
+    }
+    return dt.toString("yyyy/MM/dd HH:mm:ss");
+  }
+  
+  private static String dateTimeStr() {
+    return dateTimeStr(null);
+  }
+
+  private static String getTimeZone(Map<String, String[]> queries) {
+    String[] timezones = queries.get("timezone");
+    if (timezones.length == 0) {
+      return null;
+    } 
+    return timezones[0];
+  }
 }

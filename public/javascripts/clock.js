@@ -5,6 +5,9 @@ $(function() {
         $.ajax({
             url: '/time',
             dataType: 'json',
+            data: {
+                timezone: $('#timezone option:selected').text()
+            },
             success: function(data) {
                 $('#dateTime').html(data["dateTime"]);
             },
@@ -14,6 +17,9 @@ $(function() {
         });
     }
     $('#dateTimeUpdate').click(function() {
+        getTime();
+    });
+    $('#timezone').change(function() {
         getTime();
     });
     setInterval(function() {
