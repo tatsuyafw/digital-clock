@@ -23,7 +23,7 @@ public class Secured extends Security.Authenticator {
 
   @Override
   public Result onUnauthorized(final Context ctx) {
-    ctx.flash().put(Application.FLASH_ERROR_KEY, "Login with Twitter");
+    ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
     return redirect(routes.Application.index());
   }
 }
