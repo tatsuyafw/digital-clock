@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 GET     /clock                      controllers.Clock.clock()
 GET     /time                       controllers.Clock.time()
+GET     /calendar                   controllers.Calendar.calendar()
 
 # play-authenticate
 GET     /login                      controllers.Application.login()

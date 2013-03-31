@@ -41,16 +41,13 @@ import java.util.*;
       public String email;
 
     public String name;
-
     public String firstName;
-
     public String lastName;
 
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
       public Date lastLogin;
 
     public boolean active;
-
     public boolean emailValidated;
 
     @ManyToMany

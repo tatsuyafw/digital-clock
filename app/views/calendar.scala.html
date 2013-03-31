@@ -1,0 +1,8 @@
+@(localUser: models.User = null)
+
+@import com.feth.play.module.pa.views.html._
+
+@main("Nicocale", "calendar") {
+  <h1>Calendar</h1>
+  Your name is @localUser.name
+}
