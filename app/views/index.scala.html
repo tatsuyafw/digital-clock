@@ -1,15 +1,7 @@
-@(message: String, date: String)
+@(message: String, dateTime: String)
 
-@import com.feth.play.module.pa.views.html._
 @import helper.twitterBootstrap._
 
 @main("Nicocale", "index") {
 <h1>@message</h1>
-
-<h2>@date</h2>
-
-@helper.form(action = routes.Application.index()) {
-  <button type="submit" class="btn btn-primary">Update</button>
-}
-
 }
