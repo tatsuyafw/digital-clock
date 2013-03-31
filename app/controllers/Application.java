@@ -1,9 +1,5 @@
 package controllers;
 
-import org.codehaus.jackson.node.ObjectNode;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
 import java.util.Map;
 
 import models.User;
@@ -29,25 +25,9 @@ public class Application extends Controller {
   public static final String FLASH_ERROR_KEY = "error";
   public static final String USER_ROLE = "user";
 
-  public static Result time() {
-    Http.Request req = play.mvc.Http.Context.current().request();
-    
-    Map<String, String[]> queries  = req.queryString();
-    String timezone = getTimeZone(queries);
-    
-    ObjectNode json = Json.newObject();
-    json.put("dateTime", dateTimeStr(timezone));
-    return ok(json);
-  }
-
   public static Result index() {
-
-    String msg  = "Hello, nicocale";
-    return ok(index.render(msg, dateTimeStr()));
-  }
-
-  public static Result clock() {
-    return ok(clock.render(dateTimeStr()));
+    String msg  = "Hello, Nicocale";
+    return ok(index.render(msg));
   }
 
   public static Result login() {
@@ -55,7 +35,7 @@ public class Application extends Controller {
     return ok(login.render(msg));
   }
 
-    public static User getLocalUser(final Session session) {
+  public static User getLocalUser(final Session session) {
     final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
     final User localUser = User.findByAuthUserIdentity(currentAuthUser);
     return localUser;
@@ -97,25 +77,4 @@ public class Application extends Controller {
     }
   }
 
-  private static String dateTimeStr(String timezone) {
-    DateTime dt = null;
-    if (timezone == null) {
-      dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
-    } else {
-      dt = new DateTime(DateTimeZone.forID(timezone));
-    }
-    return dt.toString("yyyy/MM/dd HH:mm:ss");
-  }
-  
-  private static String dateTimeStr() {
-    return dateTimeStr(null);
-  }
-
-  private static String getTimeZone(Map<String, String[]> queries) {
-    String[] timezones = queries.get("timezone");
-    if (timezones.length == 0) {
-      return null;
-    } 
-    return timezones[0];
-  }
 }
