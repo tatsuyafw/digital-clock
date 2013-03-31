@@ -7,6 +7,8 @@ GET     /                           controllers.Application.index()
 GET     /clock                      controllers.Application.clock()
 GET     /time                       controllers.Application.time()
 
+GET     /restricted                 controllers.Restricted.index
+
 # play-authenticate
 GET     /login                      controllers.Application.login()
 

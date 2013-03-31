@@ -21,6 +21,7 @@
               <li class="@("active".when(nav == "index"))"><a href="@routes.Application.index()">Home</a></li>
               <li class="@("active".when(nav == "clock"))"><a href="@routes.Application.clock()">Clock</a></li>
               <li class="@("active".when(nav == "login"))"><a href="@routes.Application.login()">Login</a></li>
+              <li class="@("active".when(nav == "restricted"))"><a href="@routes.Restricted.index()">Restricted</a></li>
             </ul>
           </div><!-- .nav-collapse -->
         </div>
@@ -28,6 +29,11 @@
     </div>
     <div id="body" class="container">
       @content
+      @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
+        <div style="color: blue;">
+          @flash().get(Application.FLASH_MESSAGE_KEY)
+        </div>
+      }
     </div>
   </body>
 </html>
