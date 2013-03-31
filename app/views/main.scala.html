@@ -54,12 +54,12 @@
       </div>
     </div>
     <div id="body" class="container">
-      @content
       @if(flash.contains(Application.FLASH_ERROR_KEY)) {
         <div class="alert alert-error">
           @flash().get(Application.FLASH_ERROR_KEY)
         </div>
       }
+      @content
     </div>
   </body>
 </html>

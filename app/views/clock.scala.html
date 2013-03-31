@@ -1,4 +1,4 @@
-@(dateTime: String)
+@(dateTime: String, timezones: List[String])
 
 @import helper.twitterBootstrap._
 @main("Nicocale", "clock") {
@@ -14,39 +14,13 @@
       <label class="control-label" for="timezone">TimeZone</label>
       <div class="controls">
         <select id="timezone"class="span3">
-          <option>UTC</option>
-          <option>WET</option>
-          <option>Europe/Rome</option>
-          <option>CET</option>
-          <option>Africa/Cairo</option>
-          <option>Africa/Lusaka</option>
-          <option>Europe/Istanbul</option>
-          <option>Europe/Moscow</option>
-          <option>Asia/Baghdad</option>
-          <option>Asia/Tehran</option>
-          <option>Asia/Karachi</option>
-          <option>Asia/Calcutta</option>
-          <option>Asia/Bangkok</option>
-          <option>Asia/Hong_Kong</option>
-          <option selected>Asia/Tokyo</option>
-          <option>Pacific/Guam</option>
-          <option>Pacific/Noumea</option>
-          <option>Pacific/Fiji</option>
-          <option>Pacific/Auckland</option>
-          <option>Pacific/Tongatapu</option>
-          <option>Pacific/Kiritimati</option>
-          <option>Pacific/Pago_Pago</option>
-          <option>Pacific/Honolulu</option>
-          <option>Pacific/Gambier</option>
-          <option>US/Alaska</option>
-          <option>America/Los_Angeles</option>
-          <option>Canada/Mountain</option>
-          <option>America/Merida</option>
-          <option>America/Winnipeg</option>
-          <option>America/New_York</option>
-          <option>Atlantic/Stanley</option>
-          <option>Brazil/DeNoronha</option>
-          <option>Atlantic/Cape_Verde</option>
+          @for(timezone <- timezones) {
+            @if(timezone == "Asia/Tokyo") {
+              <option selected>Asia/Tokyo</option>
+            } else {
+              <option>@timezone</option>
+            }
+          }
         </select>
       </div>
     </div>
