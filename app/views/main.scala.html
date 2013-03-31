@@ -1,5 +1,8 @@
 @(title: String, nav: String = "")(content: Html)
 
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
 <!DOCTYPE html>
 
 <html>
@@ -16,12 +19,17 @@
       <div class="navbar-inner">
         <div class="container">
           <a href="@routes.Application.index()" class="brand">Nicocale</a>
+          <div class="btn-group pull-right">
+            @subjectPresentOr() {
+            <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()" class="btn btn-primary">Logout</a></li>
+            } {
+            <li class="@("active".when(nav == "login"))"><a href="@routes.Application.login()" class="btn btn-primary">Login</a></li>
+            }
+          </div>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="@("active".when(nav == "index"))"><a href="@routes.Application.index()">Home</a></li>
-              <li class="@("active".when(nav == "clock"))"><a href="@routes.Application.clock()">Clock</a></li>
-              <li class="@("active".when(nav == "login"))"><a href="@routes.Application.login()">Login</a></li>
-              <li class="@("active".when(nav == "restricted"))"><a href="@routes.Restricted.index()">Restricted</a></li>
+              <li class="@("active".when(nav == "clock"))"><a href="@routes.Clock.clock()">Clock</a></li>
             </ul>
           </div><!-- .nav-collapse -->
         </div>
@@ -29,9 +37,9 @@
     </div>
     <div id="body" class="container">
       @content
-      @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
-        <div style="color: blue;">
-          @flash().get(Application.FLASH_MESSAGE_KEY)
+      @if(flash.contains(Application.FLASH_ERROR_KEY)) {
+        <div class="alert alert-error">
+          @flash().get(Application.FLASH_ERROR_KEY)
         </div>
       }
     </div>
