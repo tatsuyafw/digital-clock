@@ -12,7 +12,6 @@ public class Secured extends Security.Authenticator {
   @Override
   public String getUsername(final Context ctx) {
     final AuthUser u = PlayAuthenticate.getUser(ctx.session());
-    System.out.println("Secured.getUsername");
 
     if (u != null) {
       return u.getId();
