@@ -24,52 +24,52 @@ import java.util.*;
  * Deadbolt2
  */
 @Entity
-  @Table(name = "users")
-  public class User extends Model implements Subject {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+@Table(name = "users")
+public class User extends Model implements Subject {
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
 
-    @Id
-      public Long id;
+  @Id
+  public Long id;
 
-    @Email
-    // if you make this unique, keep in mind that users *must* merge/link their
-    // accounts then on signup with additional providers
-    // @Column(unique = true)
-      public String email;
+  @Email
+  // if you make this unique, keep in mind that users *must* merge/link their
+  // accounts then on signup with additional providers
+  // @Column(unique = true)
+  public String email;
 
-    public String name;
-    public String firstName;
-    public String lastName;
+  public String name;
+  public String firstName;
+  public String lastName;
 
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-      public Date lastLogin;
+  @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
+  public Date lastLogin;
 
-    public boolean active;
-    public boolean emailValidated;
+  public boolean active;
+  public boolean emailValidated;
 
-    @ManyToMany
-      public List<SecurityRole> roles;
+  @ManyToMany
+  public List<SecurityRole> roles;
 
-    @OneToMany(cascade = CascadeType.ALL)
-      public List<LinkedAccount> linkedAccounts;
+  @OneToMany(cascade = CascadeType.ALL)
+  public List<LinkedAccount> linkedAccounts;
 
-    @ManyToMany
-      public List<UserPermission> permissions;
+  @ManyToMany
+  public List<UserPermission> permissions;
 
-    public static final Finder<Long, User> find = new Finder<Long, User>(
-                                                                         Long.class, User.class);
+  public static final Finder<Long, User> find = new Finder<Long, User>(
+                                                                       Long.class, User.class);
+
+  @Override
+  public String getIdentifier()
+  {
+    return Long.toString(id);
+  }
 
     @Override
-      public String getIdentifier()
-    {
-      return Long.toString(id);
-    }
-
-    @Override
-      public List<? extends Role> getRoles() {
+    public List<? extends Role> getRoles() {
       return roles;
     }
 
@@ -131,6 +131,7 @@ import java.util.*;
 
     public static User create(final AuthUser authUser) {
       final User user = new User();
+      System.out.println("User.create");
       user.roles = Collections.singletonList(SecurityRole
                                              .findByRoleName(controllers.Application.USER_ROLE));
       // user.permissions = new ArrayList<UserPermission>();

@@ -11,6 +11,7 @@ import play.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import play.mvc.Http.Context;
 import play.mvc.Http.Session;
 import play.mvc.Security;
 import providers.MyUsernamePasswordAuthProvider;
@@ -28,7 +29,12 @@ import com.feth.play.module.pa.user.AuthUser;
 public class Calendar extends Controller {
 
   public static Result calendar() {
-    final User localUser = Application.getLocalUser(session());
+    User localUser = Application.getLocalUser(session());
+    if(localUser == null) {
+      final Context ctx = Context.current();
+      ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
+      return redirect(routes.Application.index());
+    }
     return ok(calendar.render(localUser));
   }
 }
