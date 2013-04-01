@@ -7,9 +7,10 @@ import org.joda.time.format.DateTimeFormat;
 import java.util.List;
 import java.util.Map;
 
-import models.User;
+import models.*;
 import play.*;
-import play.data.Form;
+import play.data.*;
+import static play.data.Form.*;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.Session;
@@ -28,6 +29,8 @@ import com.feth.play.module.pa.user.AuthUser;
 @Security.Authenticated(Secured.class)
 public class Clock extends Controller {
 
+  final static Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+
   public static Result time() {
     Http.Request req = play.mvc.Http.Context.current().request();
 
@@ -40,7 +43,11 @@ public class Clock extends Controller {
   }
 
   public static Result clock() {
-    return ok(clock.render(dateTimeStr(), getTimeZones()));
+    return ok(clock.render(dateTimeStr(), getTimeZones(), clockSettingForm));
+  }
+
+  public static Result saveClockSetting() {
+    return ok("saveClockSetting");
   }
 
   private static String dateTimeStr(String timezone) {

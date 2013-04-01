@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /clock                      controllers.Clock.clock()
+POST    /clock                      controllers.Clock.saveClockSetting()
 GET     /time                       controllers.Clock.time()
 GET     /calendar                   controllers.Calendar.calendar()
 

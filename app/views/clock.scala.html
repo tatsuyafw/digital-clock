@@ -1,36 +1,58 @@
-@(dateTime: String, timezones: List[String])
+@(dateTime: String, timezones: List[String], clockSettingForm: Form[ClockSetting])
 
+@import helper._
 @import helper.twitterBootstrap._
+
 @main("Nicocale", "clock") {
 <div class="row">
   <div class="offset2 span10">
     <h1 id="dateTime">@dateTime</h1>
   </div>
 </div>
+
 <div id="clock-setting" class="row">
-  <div class="offset5 span10">
-  <form class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="timezone">TimeZone</label>
-      <div class="controls">
-        <select id="timezone"class="span3">
-          @for(timezone <- timezones) {
-            @if(timezone == "Asia/Tokyo") {
-              <option selected>Asia/Tokyo</option>
-            } else {
-              <option>@timezone</option>
-            }
-          }
-        </select>
-      </div><!-- controls -->
-    </div><!-- .control-group -->
-    <div class="control-group">
-      <div class="controls">
-        <button class="btn btn-success" type="submit">Save Setting</button>
-      </div>
-    </div>
-  </form>
+  <div class="offset6 span14">
+@helper.form(action = routes.Clock.saveClockSetting) {
+  <fieldset>
+    <legend>Clock Setting</legend>
+    @select(
+      clockSettingForm("timezone"),
+      options = options(TimeZones.list),
+      '_default -> "Asia/Tokyo",
+      '_label -> "TimeZone"
+    )
+  </fieldset>
+  <div class="actions">
+    <button type="submit" class="btn btn-success">Save Setting</button>
+  </div>
+}
   </div>
 </div>
+
+<!-- <div id="clock-setting" class="row"> -->
+<!--   <div class="offset5 span10"> -->
+<!--   <form class="form-horizontal"> -->
+<!--     <div class="control-group"> -->
+<!--       <label class="control-label" for="timezone">TimeZone</label> -->
+<!--       <div class="controls"> -->
+<!--         <select id="timezone"class="span3"> -->
+<!--           @for(timezone <- timezones) { -->
+<!--             @if(timezone == "Asia/Tokyo") { -->
+<!--               <option selected>Asia/Tokyo</option> -->
+<!--             } else { -->
+<!--               <option>@timezone</option> -->
+<!--               } -->
+<!--           } -->
+<!--         </select> -->
+<!--       </div><\!-- controls -\-> -->
+<!--     </div><\!-- .control-group -\-> -->
+<!--     <div class="control-group"> -->
+<!--       <div class="controls"> -->
+<!--         <button class="btn btn-success" type="submit">Save Setting</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </form> -->
+<!--   </div> -->
+<!-- </div> -->
 <script src="@routes.Assets.at("js/clock.js")" type="text/javascript"></script>
 }
