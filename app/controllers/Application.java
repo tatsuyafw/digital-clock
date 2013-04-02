@@ -26,7 +26,7 @@ public class Application extends Controller {
   public static final String USER_ROLE         = "user";
 
   public static Result index() {
-    String msg  = "Hello, Nicocale";
+    String msg  = "Hello, Digital Clock";
     return ok(index.render(msg));
   }
 
