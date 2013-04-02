@@ -4,13 +4,16 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
+import java.util.List;
 import java.util.Map;
 
-import models.User;
+import models.*;
 import play.*;
-import play.data.Form;
+import play.data.*;
+import static play.data.Form.*;
 import play.libs.Json;
 import play.mvc.*;
+import play.mvc.Http.Context;
 import play.mvc.Http.Session;
 import play.mvc.Security;
 import providers.MyUsernamePasswordAuthProvider;
@@ -27,8 +30,52 @@ import com.feth.play.module.pa.user.AuthUser;
 @Security.Authenticated(Secured.class)
 public class Clock extends Controller {
 
+  public static final String FLASH_MESSAGE_KEY = "msg";
+  public static final String FLASH_ERROR_KEY   = "error";
+
+  // Clock page, GET /clock
+  public static Result clock() {
+    User user = Application.getLocalUser(session());
+
+    // when not log in
+    if (user == null) {
+      final Context ctx = Context.current();
+      ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
+      return redirect(routes.Application.index());
+    }
+
+    Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+    String timezone  = user.clockSetting.timezone;
+    String fontcolor = user.clockSetting.fontcolor;
+    return ok(clock.render(dateTimeStr(timezone), timezone, fontcolor));
+  }
+
+  // save setting, POST /clock
+  public static Result saveClockSetting() {
+    Form<ClockSetting> filledForm = form(ClockSetting.class).bindFromRequest();
+    User user = Application.getLocalUser(session());
+
+    if (filledForm.hasErrors()) {
+      String fontcolor = user.clockSetting.fontcolor;
+      return badRequest(clock.render(dateTimeStr(), user.clockSetting.timezone, fontcolor));
+    }
+
+    final Context ctx = Context.current();
+    ctx.flash().put(Clock.FLASH_MESSAGE_KEY, "Save setting!!");
+
+    ClockSetting created = filledForm.get();
+    user.clockSetting.timezone  = created.timezone;
+    user.clockSetting.fontcolor = created.fontcolor;
+    user.clockSetting.update();
+    String timezone = user.clockSetting.timezone;
+    String fontcolor = user.clockSetting.fontcolor;
+
+    return ok(clock.render(dateTimeStr(timezone), timezone, fontcolor));
+  }
+
+    // time json , GET /time
   public static Result time() {
-    Http.Request req = play.mvc.Http.Context.current().request();
+    Http.Request req = Context.current().request();
 
     Map<String, String[]> queries  = req.queryString();
     String timezone = getTimeZone(queries);
@@ -36,10 +83,6 @@ public class Clock extends Controller {
     ObjectNode json = Json.newObject();
     json.put("dateTime", dateTimeStr(timezone));
     return ok(json);
-  }
-
-  public static Result clock() {
-    return ok(clock.render(dateTimeStr()));
   }
 
   private static String dateTimeStr(String timezone) {

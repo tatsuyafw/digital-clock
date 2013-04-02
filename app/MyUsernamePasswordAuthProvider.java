@@ -197,7 +197,7 @@ public class MyUsernamePasswordAuthProvider
     return new MyLoginUsernamePasswordAuthUser(login.getPassword(),
                                                login.getEmail());
   }
-	
+
 
   @Override
     protected MyLoginUsernamePasswordAuthUser transformAuthUser(final MyUsernamePasswordAuthUser authUser, final Context context) {

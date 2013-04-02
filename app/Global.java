@@ -16,7 +16,7 @@ import play.mvc.Call;
 public class Global extends GlobalSettings {
   public void onStart(Application app) {
     PlayAuthenticate.setResolver(new Resolver() {
-        
+
         @Override
           public Call login() {
           // Your login page
