@@ -4,13 +4,17 @@
 @import helper.twitterBootstrap._
 
 @main("Digital Clock", "clock") {
+@if(flash.contains(Clock.FLASH_MESSAGE_KEY)) {
 <div class="row">
-  @if(flash.contains(Clock.FLASH_ERROR_KEY)) {
-    <div class="alert alert-error fade in">
+  <div class="offset2 span8">  
+    <div class="alert alert-success fade in">
       <button class="close" data-dismiss="alert" type="button">x</button>
-      @flash().get(Clock.FLASH_ERROR_KEY)
+      @flash().get(Clock.FLASH_MESSAGE_KEY)
     </div>
-  }
+  </div>
+</div>
+}
+<div class="row">  
   <div class="offset2 span10">
     <h1 id="dateTime">@dateTime</h1>
   </div>

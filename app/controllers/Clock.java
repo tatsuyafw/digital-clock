@@ -30,9 +30,8 @@ import com.feth.play.module.pa.user.AuthUser;
 @Security.Authenticated(Secured.class)
 public class Clock extends Controller {
 
-  public static final String FLASH_ERROR_KEY = "error";
-
-  //final static Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+  public static final String FLASH_MESSAGE_KEY = "msg";
+  public static final String FLASH_ERROR_KEY   = "error";
 
   // time json , GET /time
   public static Result time() {
@@ -49,15 +48,15 @@ public class Clock extends Controller {
   // Clock page, GET /clock
   public static Result clock() {
     User user = Application.getLocalUser(session());
-
+    
     // when not log in
     if (user == null) {
-      final Context ctx = Context.current();
+      final Context ctx = Context.current();  
       ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
       return redirect(routes.Application.index());
     }
-
-    Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+    
+    Form<ClockSetting> clockSettingForm = form(ClockSetting.class);    
     String timezone = user.clockSetting.timezone;
     return ok(clock.render(dateTimeStr(timezone), clockSettingForm, timezone));
   }
@@ -66,11 +65,13 @@ public class Clock extends Controller {
   public static Result saveClockSetting() {
     Form<ClockSetting> filledForm = form(ClockSetting.class).bindFromRequest();
     User user = Application.getLocalUser(session());
-
+    
     if (filledForm.hasErrors()) {
-      System.out.println("Invalid form!!");
       return badRequest(clock.render(dateTimeStr(), filledForm, user.clockSetting.timezone));
     }
+
+    final Context ctx = Context.current();
+    ctx.flash().put(Clock.FLASH_MESSAGE_KEY, "Save setting!!");
 
     ClockSetting created = filledForm.get();
     user.clockSetting.timezone = created.timezone;
