@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
 
@@ -19,7 +20,6 @@ public class ClockSetting extends Model {
   @Id
   public Long id;
 
-  @NotNull
   public String timezone;
 
   @CreatedTimestamp
@@ -32,5 +32,10 @@ public class ClockSetting extends Model {
     final ClockSetting clockSetting = new ClockSetting();
     clockSetting.timezone = "Asia/Tokyo";
     return clockSetting;
+  }
+
+  @Override
+  public String toString() {
+    return "ClockSetting: " + timezone;
   }
 }

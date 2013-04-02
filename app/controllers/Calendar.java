@@ -30,7 +30,7 @@ public class Calendar extends Controller {
 
   public static Result calendar() {
     User localUser = Application.getLocalUser(session());
-    if(localUser == null) {
+    if (localUser == null) {
       final Context ctx = Context.current();
       ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
       return redirect(routes.Application.index());

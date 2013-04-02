@@ -16,9 +16,6 @@ $(function() {
             }
         });
     }
-    $('#dateTimeUpdate').click(function() {
-        getTime();
-    });
     $('#timezone').change(function() {
         getTime();
     });

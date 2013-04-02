@@ -13,6 +13,7 @@ import play.data.*;
 import static play.data.Form.*;
 import play.libs.Json;
 import play.mvc.*;
+import play.mvc.Http.Context;
 import play.mvc.Http.Session;
 import play.mvc.Security;
 import providers.MyUsernamePasswordAuthProvider;
@@ -29,10 +30,13 @@ import com.feth.play.module.pa.user.AuthUser;
 @Security.Authenticated(Secured.class)
 public class Clock extends Controller {
 
-  final static Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+  public static final String FLASH_ERROR_KEY = "error";
 
+  //final static Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+
+  // time json , GET /time
   public static Result time() {
-    Http.Request req = play.mvc.Http.Context.current().request();
+    Http.Request req = Context.current().request();
 
     Map<String, String[]> queries  = req.queryString();
     String timezone = getTimeZone(queries);
@@ -42,16 +46,41 @@ public class Clock extends Controller {
     return ok(json);
   }
 
+  // Clock page, GET /clock
   public static Result clock() {
-    return ok(clock.render(dateTimeStr(), getTimeZones(), clockSettingForm));
+    User user = Application.getLocalUser(session());
+
+    // when not log in
+    if (user == null) {
+      final Context ctx = Context.current();
+      ctx.flash().put(Application.FLASH_ERROR_KEY, "Sorry... Login with Twitter. And try again!!");
+      return redirect(routes.Application.index());
+    }
+
+    Form<ClockSetting> clockSettingForm = form(ClockSetting.class);
+    String timezone = user.clockSetting.timezone;
+    return ok(clock.render(dateTimeStr(timezone), clockSettingForm, timezone));
   }
 
+  // save setting, POST /clock
   public static Result saveClockSetting() {
-    return ok("saveClockSetting");
+    Form<ClockSetting> filledForm = form(ClockSetting.class).bindFromRequest();
+    User user = Application.getLocalUser(session());
+
+    if (filledForm.hasErrors()) {
+      System.out.println("Invalid form!!");
+      return badRequest(clock.render(dateTimeStr(), filledForm, user.clockSetting.timezone));
+    }
+
+    ClockSetting created = filledForm.get();
+    user.clockSetting.timezone = created.timezone;
+    user.clockSetting.update();
+    String timezone = user.clockSetting.timezone;
+    return ok(clock.render(dateTimeStr(timezone), filledForm, timezone));
   }
 
   private static String dateTimeStr(String timezone) {
-    ;    DateTime dt = null;
+    DateTime dt = null;
     if (timezone == null) {
       dt = new DateTime(DateTimeZone.forID("Asia/Tokyo"));
     } else {
@@ -70,44 +99,5 @@ public class Clock extends Controller {
       return null;
     }
     return timezones[0];
-  }
-
-  private static List<String> getTimeZones() {
-    String[] timezones = {
-      "UTC",
-      "WET",
-      "Europe/Rome",
-      "CET",
-      "Africa/Cairo",
-      "Africa/Lusaka",
-      "Europe/Istanbul",
-      "Europe/Moscow",
-      "Asia/Baghdad",
-      "Asia/Tehran",
-      "Asia/Karachi",
-      "Asia/Calcutta",
-      "Asia/Bangkok",
-      "Asia/Hong_Kong",
-      "Asia/Tokyo",
-      "Pacific/Guam",
-      "Pacific/Noumea",
-      "Pacific/Fiji",
-      "Pacific/Auckland",
-      "Pacific/Tongatapu",
-      "Pacific/Kiritimati",
-      "Pacific/Pago_Pago",
-      "Pacific/Honolulu",
-      "Pacific/Gambier",
-      "US/Alaska",
-      "America/Los_Angeles",
-      "Canada/Mountain",
-      "America/Merida",
-      "America/Winnipeg",
-      "America/New_York",
-      "Atlantic/Stanley",
-      "Brazil/DeNoronha",
-      "Atlantic/Cape_Verde"
-    };
-    return java.util.Arrays.asList(timezones);
   }
 }

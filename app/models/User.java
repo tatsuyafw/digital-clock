@@ -41,7 +41,7 @@ public class User extends Model implements Subject {
   public String firstName;
   public String lastName;
 
-  @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")  
+  @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
   public Date lastLogin;
 
   public boolean active;
@@ -131,6 +131,7 @@ public class User extends Model implements Subject {
     // user.permissions = new ArrayList<UserPermission>();
     // user.permissions.add(UserPermission.findByValue("printers.edit"));
     user.clockSetting = ClockSetting.create();
+    user.clockSetting.save();
     user.active = true;
     user.lastLogin = new Date();
     user.linkedAccounts = Collections.singletonList(LinkedAccount

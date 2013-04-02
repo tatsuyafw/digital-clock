@@ -5,7 +5,7 @@
 
 create table clock_setting (
   id                        bigint not null,
-  timezone                  varchar(255) not null,
+  timezone                  varchar(255),
   created_at                timestamp not null,
   updated_at                timestamp not null,
   constraint pk_clock_setting primary key (id))
