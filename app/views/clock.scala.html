@@ -4,9 +4,15 @@
 @import helper.twitterBootstrap._
 
 @main("Digital Clock", "clock") {
+<div class="row">
+  <div class="offset1 span10">
+    <h1 id="dateTime" style=@{val color = "color:" + fontColor; color}>@dateTime</h1>
+  </div>
+</div>
+
 @if(flash.contains(Clock.FLASH_MESSAGE_KEY)) {
 <div class="row">
-  <div class="offset2 span8">  
+  <div class="offset2 span8">
     <div class="alert alert-success fade in">
       <button class="close" data-dismiss="alert" type="button">x</button>
       @flash().get(Clock.FLASH_MESSAGE_KEY)
@@ -14,17 +20,12 @@
   </div>
 </div>
 }
-<div class="row">  
-  <div class="offset1 span10">
-    <h1 id="dateTime" style=@{val color = "color:" + fontColor; color}>@dateTime</h1>
-  </div>
-</div>
 
 <div id="clock-setting" class="row">
   <div class="offset6 span14">
     <form method="POST" action="@routes.Clock.saveClockSetting">
-      <fieldset>        
-        <legend>Clock Setting </legend>        
+      <fieldset>
+        <legend>Clock Setting </legend>
         <div id="timezone_field" class="clearfix ">
           <label for="timezone">Timezone</label>
           <div class="input">
@@ -45,14 +46,18 @@
           <label for="fontcolor">Font Color</label>
           <div class="input">
             <select id="fontcolor" name="fontcolor">
-              <option value="#000000">Black</option>              
-              <option value="#FF0000">Red</option>
-              <option value="#FFFFFF">White</option>
+            @for((k, v) <- Colors.map()) {
+              @if(k == fontColor) {
+                <option value=@k selected>@v</option>
+              } else {
+                <option value=@k>@v</option>
+              }
+            }
             </select>
             <span class="help-inline"></span>
             <span class="help-block"></span>
-          </div>        
-      </fieldset>      
+          </div>
+      </fieldset>
       <div class="actions">
         <input type="submit" class="btn btn-success" value="Save Setting">
       </div>
