@@ -3,6 +3,15 @@
 
 # --- !Ups
 
+create table clock_setting (
+  id                        bigint not null,
+  timezone                  varchar(255),
+  fontcolor                 varchar(255),
+  created_at                timestamp not null,
+  updated_at                timestamp not null,
+  constraint pk_clock_setting primary key (id))
+;
+
 create table linked_account (
   id                        bigint not null,
   user_id                   bigint,
@@ -38,6 +47,7 @@ create table users (
   last_login                timestamp,
   active                    boolean,
   email_validated           boolean,
+  clock_setting_id          bigint,
   constraint pk_users primary key (id))
 ;
 
@@ -59,6 +69,8 @@ create table users_user_permission (
   user_permission_id             bigint not null,
   constraint pk_users_user_permission primary key (users_id, user_permission_id))
 ;
+create sequence clock_setting_seq;
+
 create sequence linked_account_seq;
 
 create sequence security_role_seq;
@@ -73,6 +85,8 @@ alter table linked_account add constraint fk_linked_account_user_1 foreign key (
 create index ix_linked_account_user_1 on linked_account (user_id);
 alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references users (id) on delete restrict on update restrict;
 create index ix_token_action_targetUser_2 on token_action (target_user_id);
+alter table users add constraint fk_users_clockSetting_3 foreign key (clock_setting_id) references clock_setting (id) on delete restrict on update restrict;
+create index ix_users_clockSetting_3 on users (clock_setting_id);
 
 
 
@@ -87,6 +101,8 @@ alter table users_user_permission add constraint fk_users_user_permission_user_0
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
+
+drop table if exists clock_setting;
 
 drop table if exists linked_account;
 
@@ -103,6 +119,8 @@ drop table if exists users_user_permission;
 drop table if exists user_permission;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists clock_setting_seq;
 
 drop sequence if exists linked_account_seq;
 

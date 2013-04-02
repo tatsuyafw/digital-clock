@@ -16,11 +16,25 @@ $(function() {
             }
         });
     }
-    $('#dateTimeUpdate').click(function() {
-        getTime();
+    function changeFontColor() {
+        var color = $('#fontcolor option:selected').attr("value");
+        $('#dateTime').css("color", color);
+    }
+    function runEffect() {
+        $('#toggle-effect').toggle("blind", 500);
+    }
+    $('#toggle-effect').hide();
+    $('#clock-setting-title').click(function() {
+        runEffect();
+        return false;
     });
     $('#timezone').change(function() {
         getTime();
+        return false;
+    });
+    $('#fontcolor').change(function() {
+        changeFontColor();
+        return false;
     });
     setInterval(function() {
         getTime();

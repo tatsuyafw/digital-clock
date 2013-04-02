@@ -22,11 +22,11 @@ import com.feth.play.module.pa.user.AuthUser;
 public class Application extends Controller {
 
   public static final String FLASH_MESSAGE_KEY = "message";
-  public static final String FLASH_ERROR_KEY = "error";
-  public static final String USER_ROLE = "user";
+  public static final String FLASH_ERROR_KEY   = "error";
+  public static final String USER_ROLE         = "user";
 
   public static Result index() {
-    String msg  = "Hello, Nicocale";
+    String msg  = "Hello, Digital Clock";
     return ok(index.render(msg));
   }
 

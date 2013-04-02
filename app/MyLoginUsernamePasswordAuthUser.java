@@ -6,7 +6,7 @@ public class MyLoginUsernamePasswordAuthUser extends
 		DefaultUsernamePasswordAuthUser {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -18,7 +18,7 @@ public class MyLoginUsernamePasswordAuthUser extends
 
 	/**
 	 * For logging the user in automatically
-	 * 
+	 *
 	 * @param email
 	 */
 	public MyLoginUsernamePasswordAuthUser(final String email) {

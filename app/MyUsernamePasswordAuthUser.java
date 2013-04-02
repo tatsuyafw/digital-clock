@@ -9,7 +9,7 @@ public class MyUsernamePasswordAuthUser extends UsernamePasswordAuthUser
 		implements NameIdentity {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String name;
