@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TimeZones {
   public static List<String> list() {
-    List<String> all = new ArrayList<String>();    
+    List<String> all = new ArrayList<String>();
     all.add("UTC");
     all.add("WET");
     all.add("Europe/Rome");

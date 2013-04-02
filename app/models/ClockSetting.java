@@ -21,6 +21,7 @@ public class ClockSetting extends Model {
   public Long id;
 
   public String timezone;
+  public String fontcolor;
 
   @CreatedTimestamp
   public Date createdAt;
@@ -30,7 +31,8 @@ public class ClockSetting extends Model {
 
   public static ClockSetting create() {
     final ClockSetting clockSetting = new ClockSetting();
-    clockSetting.timezone = "Asia/Tokyo";
+    clockSetting.timezone  = "Asia/Tokyo";
+    clockSetting.fontcolor = "#000000";
     return clockSetting;
   }
 

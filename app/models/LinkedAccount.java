@@ -34,7 +34,7 @@ public class LinkedAccount extends Model {
     ret.update(authUser);
     return ret;
   }
-	
+
   public void update(final AuthUser authUser) {
     this.providerKey = authUser.getProvider();
     this.providerUserId = authUser.getId();

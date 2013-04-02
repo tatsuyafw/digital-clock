@@ -16,8 +16,15 @@ $(function() {
             }
         });
     }
+    function changeFontColor() {
+        var color = $('#fontcolor option:selected').attr("value");
+        $('#dateTime').css("color", color);
+    }
     $('#timezone').change(function() {
         getTime();
+    });
+    $('#fontcolor').change(function() {
+        changeFontColor();
     });
     setInterval(function() {
         getTime();

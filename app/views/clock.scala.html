@@ -1,4 +1,4 @@
-@(dateTime: String, clockSettingForm: Form[ClockSetting], userTimezone: String)
+@(dateTime: String, userTimezone: String, fontColor: String)
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -15,16 +15,16 @@
 </div>
 }
 <div class="row">  
-  <div class="offset2 span10">
-    <h1 id="dateTime">@dateTime</h1>
+  <div class="offset1 span10">
+    <h1 id="dateTime" style=@{val color = "color:" + fontColor; color}>@dateTime</h1>
   </div>
 </div>
 
 <div id="clock-setting" class="row">
   <div class="offset6 span14">
     <form method="POST" action="@routes.Clock.saveClockSetting">
-      <fieldset>
-        <legend>Clock Setting</legend>
+      <fieldset>        
+        <legend>Clock Setting </legend>        
         <div id="timezone_field" class="clearfix ">
           <label for="timezone">Timezone</label>
           <div class="input">
@@ -41,7 +41,18 @@
             <span class="help-block"></span>
           </div>
         </div>
-      </fieldset>
+        <div id="font-color_field" class="clearfix ">
+          <label for="fontcolor">Font Color</label>
+          <div class="input">
+            <select id="fontcolor" name="fontcolor">
+              <option value="#000000">Black</option>              
+              <option value="#FF0000">Red</option>
+              <option value="#FFFFFF">White</option>
+            </select>
+            <span class="help-inline"></span>
+            <span class="help-block"></span>
+          </div>        
+      </fieldset>      
       <div class="actions">
         <input type="submit" class="btn btn-success" value="Save Setting">
       </div>

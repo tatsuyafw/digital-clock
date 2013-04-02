@@ -25,7 +25,7 @@ public class TokenAction extends Model {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
