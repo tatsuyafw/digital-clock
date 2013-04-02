@@ -7,8 +7,8 @@ GET     /                           controllers.Application.index()
 GET     /clock                      controllers.Clock.clock()
 POST    /clock                      controllers.Clock.saveClockSetting()
 GET     /time                       controllers.Clock.time()
-# GET     /calendar/:year/:month      controllers.MyCalendar.calendar(year: Integer, month: Integer)
 GET     /calendar                   controllers.MyCalendar.calendar(year: Integer ?= 0, month: Integer ?= 0)
+POST   /tweet                       controllers.Tweet.tweet()
 
 # play-authenticate
 GET     /login                      controllers.Application.login()
