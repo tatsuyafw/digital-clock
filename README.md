@@ -1,5 +1,5 @@
-nicocale
-========
+Digital Clock
+=============
 
 Play 2.1 application
 
