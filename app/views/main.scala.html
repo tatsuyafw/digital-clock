@@ -15,6 +15,7 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/bootstrap.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/clock.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/calendar.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("img/favicon.png")">
   </head>
   <body>
@@ -47,7 +48,7 @@
             <ul class="nav">
               <li class="@("active".when(nav == "index"))"><a href="@routes.Application.index()">Home</a></li>
               <li class="@("active".when(nav == "clock"))"><a href="@routes.Clock.clock()">Clock</a></li>
-              <li class="@("active".when(nav == "calendar"))"><a href="@routes.Calendar.calendar">Calendar</a></li>
+              <li class="@("active".when(nav == "calendar"))"><a href="@routes.MyCalendar.calendar()">Calendar</a></li>
             </ul>
           </div><!-- .nav-collapse -->
         </div>
