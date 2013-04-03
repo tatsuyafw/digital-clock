@@ -63,11 +63,11 @@
                 <tr>
                   <td class="sunday">@week.apply(0)</td>
                   @for(day <- week.subList(1, 6)) {
-                    <td>@day                      
-                      @if(day != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)) != null) {
-                        <p>hoge</p>
-                      }
-                    </td>
+                    @if(day != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)) != null) {
+                   <td><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)).content">@day</a>
+                    } else {
+                   <td>@day</td>
+                   }
                   }
                 <td class="saturday">@week.apply(6)</td>
               </tr>
