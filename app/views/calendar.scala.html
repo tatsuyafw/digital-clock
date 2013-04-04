@@ -90,5 +90,22 @@
     </div>
   </div>
 </div>
+<script src="@routes.Assets.at("js/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@routes.Assets.at("js/calendar.js")" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function() {
+    $("form").validate({
+      rules: {
+        content :{
+          required: true
+        }
+      },
+      messages: {
+        content :{
+          required: "please input"
+        }
+      }
+    });
+  });
+</script>
 }
