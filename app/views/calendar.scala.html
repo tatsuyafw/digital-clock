@@ -61,7 +61,11 @@
             <tbody>
               @for(week <- cal) {
                 <tr>
-                  <td class="sunday">@week.apply(0)</td>
+                  @if(week.apply(0) != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(0))) != null) {
+                  <td class="sunday"><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(0))).content">@week.apply(0)</a>
+                  } else {
+                   <td class="sunday">@week.apply(0)</td>
+                  }
                   @for(day <- week.subList(1, 6)) {
                     @if(day != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)) != null) {
                    <td><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)).content">@day</a>
@@ -69,7 +73,11 @@
                    <td>@day</td>
                    }
                   }
-                <td class="saturday">@week.apply(6)</td>
+                   @if(week.apply(6) != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(6))) != null) {
+                  <td class="saturday"><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(6))).content">@week.apply(6)</a>
+                  } else {
+                   <td class="saturday">@week.apply(6)</td>
+                  }
               </tr>
             }
             </tbody>
