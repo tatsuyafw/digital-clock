@@ -50,6 +50,9 @@ public class User extends Model implements Subject {
   @OneToOne(cascade = CascadeType.ALL)
   public ClockSetting clockSetting;
 
+  @OneToMany(cascade = CascadeType.ALL)
+  public List<Tweet> tweets;
+
   @ManyToMany
   public List<SecurityRole> roles;
 

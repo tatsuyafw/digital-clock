@@ -1,4 +1,5 @@
-@(localUser: models.User = null,
+@(localUser: models.User,
+  tweetForm: Form[Tweet],
   prevYear: Integer,
   prevMonth: Integer,
   year:  Integer,
@@ -10,12 +11,12 @@
 
 @import helper._
 @import helper.twitterBootstrap._
-@import com.feth.play.module.pa.views.html._
 
 @main("Digital Clock", "calendar") {
 <div class="row">
   <div class="offset1 span10">
     <h1 id="calendar-title">Calendar</h1>
+
     <div class="row">
       <div id="calendar-table" class="offset1 span9">
         <div id="calendar-head" class="row">
@@ -52,21 +53,67 @@
                 <th class="saturday">Sat.</th>
               </tr>
             </thead>
+            @*
+            @if(models.Tweet.findByDate(localUser, year, month, 4) != null) {
+              <h1>@models.Tweet.findByDate(localUser, year, month, 4).content</h1>
+            }
+            *@
             <tbody>
               @for(week <- cal) {
                 <tr>
-                  <td class="sunday">@week.apply(0)</td>
-                  @for(day <- week.subList(1, 6)) {
-                    <td>@day</td>
+                  @if(week.apply(0) != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(0))) != null) {
+                  <td class="sunday"><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(0))).content">@week.apply(0)</a>
+                  } else {
+                   <td class="sunday">@week.apply(0)</td>
                   }
-                <td class="saturday">@week.apply(6)</td>
+                  @for(day <- week.subList(1, 6)) {
+                    @if(day != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)) != null) {
+                   <td><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(day)).content">@day</a>
+                    } else {
+                   <td>@day</td>
+                   }
+                  }
+                   @if(week.apply(6) != "" && models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(6))) != null) {
+                  <td class="saturday"><a href="#" data-toggle="tooltip" title="@models.Tweet.findByDate(localUser, year, month, Integer.parseInt(week.apply(6))).content">@week.apply(6)</a>
+                  } else {
+                   <td class="saturday">@week.apply(6)</td>
+                  }
               </tr>
             }
             </tbody>
           </table>
         </div>
+      </div><!-- #calendar-table -->
+    </div>
+    <div id="tweet_form" class="row">
+      <div class="offset1 span9">
+        <form class="form-inline" action="/tweet" method="POST" >
+          <fieldset>
+            <input type="date" name="created" value="" class="span2"/>
+            <input type="text" name="content" placeholder="Tweet..." value="" class="span6"/>
+            <button type="submit" class="btn">Tweet</button>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>
 </div>
+<script src="@routes.Assets.at("js/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("js/calendar.js")" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function() {
+    $("form").validate({
+      rules: {
+        content :{
+          required: true
+        }
+      },
+      messages: {
+        content :{
+          required: "please input"
+        }
+      }
+    });
+  });
+</script>
 }
